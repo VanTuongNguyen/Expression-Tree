@@ -59,12 +59,7 @@ int Exp::CheckPriority(char c)
 	case '*': case '/': return 2;
 	}
 }
-void Exp::print()
-{
-	XuLy();
-	InFix2PostFix();
-	cout << exp;
-}
+
 
 
 void Exp::InFix2PostFix()
@@ -161,6 +156,8 @@ void Exp::InFix2PostFix()
 
 Node* Exp::RootTree()
 {
+	XuLy();
+	InFix2PostFix();
 	stack<Node*> st;
 	string op;
 	for (int i = 0; i < exp.length(); i++)

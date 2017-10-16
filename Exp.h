@@ -18,15 +18,20 @@ struct Node
 class Exp
 {
 	string exp;
+	// convert infix to postfix
 	void InFix2PostFix();
+	// format expression
 	void XuLy();
+	// check number (double)
 	bool CheckNum(char);
 	int CheckPriority(char);
 	
 	
 public:
-	void print();
+	
+	//add a expression
 	void InPut();
+	// Initial a tree from expression
 	Node* RootTree();
 
 	
