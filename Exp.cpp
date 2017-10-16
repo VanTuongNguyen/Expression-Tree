@@ -50,6 +50,18 @@ int Exp::CheckPriority(char c)
 	case '(': return 0;
 	case '+': case '-': return 1;
 	case '*': case '/': return 2;
+	case '0':
+	case '1':
+	case '2':
+	case '3':
+	case '4':
+	case '5':
+	case '6':
+	case '7':
+	case '8':
+	case '9':
+		return 3;
+
 	}
 }
 
@@ -169,5 +181,22 @@ double Exp::Calculate(Node* root)
 		}
 	}
 }
+
+//string Exp::Print(Node* root)
+//{
+//	string temp;
+//	if (CheckNum(root->data[0])) return temp=root->data;
+//	else
+//	{
+//		if (CheckPriority(root->left->data[0]) < CheckPriority(root->data[0]))
+//			temp +="("+ Print(root->left)+')';
+//		else temp +=  Print(root->left) ;
+//		if (CheckPriority(root->right->data[0]) < CheckPriority(root->data[0])
+//			|| (CheckPriority(root->right->data[0])==1 && root->data[0] == '-'))
+//				temp += root->data[0]+ "(" + Print(root->right) + ')';
+//		else temp += root->data[0] + Print(root->left);
+//		return temp;
+//	}
+//}
 
 

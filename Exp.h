@@ -19,8 +19,7 @@ class Exp
 {
 	string exp;
 	Node* root;
-	
-	
+	static string print;
 public:
 	
 	//add a expression
@@ -29,7 +28,8 @@ public:
 	Node* RootTree();
 	// calculate the expression from tree's root
 	double Calculate(Node* root);
-
+	//Print expression
+	string Print(Node* root);
 private:
 	// convert infix to postfix
 	void InFix2PostFix();

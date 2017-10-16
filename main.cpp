@@ -9,8 +9,9 @@ int main()
 	e.InPut();
 
 	a=e.Calculate(e.RootTree());
-	cout << a;
-	
+	cout << a<<endl;
+	Node *p=e.RootTree();
+	e.Print(p);
 	
 	system("pause");
 }
