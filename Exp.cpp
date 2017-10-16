@@ -2,11 +2,12 @@
 #include <string>
 #include <stack>
 
-
 void Exp::InPut()
 {
 	cout << "Nhap bieu thuc : ";
 	getline(cin, exp);
+	XuLy();
+	InFix2PostFix();
 }
 
 bool Exp::CheckNum(char c)
@@ -25,7 +26,6 @@ void Exp::XuLy()
 		{
 			if (CheckNum(temp[temp.length() - 1]))
 			{
-				
 				temp += exp[i];
 				continue;
 			}
@@ -36,18 +36,11 @@ void Exp::XuLy()
 				continue;
 			}
 		}
-		
-		if (exp[i] == ' ')
-		{
-			
-			continue;
-		}
+		if (exp[i] == ' ') continue;
 		temp += ' ';
 		temp += exp[i];
-
 	}
-	
-	exp = temp+' ';
+	exp = temp + ' ';
 }
 
 int Exp::CheckPriority(char c)
@@ -60,8 +53,6 @@ int Exp::CheckPriority(char c)
 	}
 }
 
-
-
 void Exp::InFix2PostFix()
 {
 	stack<char> st;
@@ -70,12 +61,17 @@ void Exp::InFix2PostFix()
 	{
 		if (exp[i] == ' ')
 		{
-			
 			if (CheckNum(op[0]))
 			{
 				temp += op;
 				op.clear();
 				temp += ' ';
+			}
+			else if (op[0] == '(')
+			{
+				st.push(op[0]);
+				op.clear();
+
 			}
 			else if (op[0] == ')')
 			{
@@ -88,66 +84,28 @@ void Exp::InFix2PostFix()
 						st.pop();
 					}
 					else st.pop();
-
 				}
 				op.clear();
-
 			}
 			else
 			{
-				if (!st.empty())
-				{
-					if (CheckPriority(op[0]) <= CheckPriority(st.top()))
+				while (!st.empty() && CheckPriority(op[0]) <= CheckPriority(st.top()))
 					{
-						if (op[0] == '(')
-						{
-
-							st.push(op[0]);
-							op.clear();
-						}
-						else if (st.top() == '(')
-						{
-							st.push(op[0]);
-							op.clear();
-						}
-						else
-						{
 							temp += st.top();
 							temp += ' ';
 							st.pop();
-							st.push(op[0]);
-							op.clear();
-						}
-
 					}
-					
-					else
-					{
-						
-						st.push(op[0]);
-						op.clear();
-
-					}
-				}
-				else
-				{
 					st.push(op[0]);
 					op.clear();
-				}
 			}
 		}
 		else op += exp[i];
 	}
 	while (!st.empty())
 	{
-		if (st.top() != '(')
-		{
-			temp += st.top();
-			temp += ' ';
-			st.pop();
-		}
-		else st.pop();
-
+		temp += st.top();
+		temp += ' ';
+		st.pop();
 	}
 	exp = temp;
 }
@@ -156,8 +114,7 @@ void Exp::InFix2PostFix()
 
 Node* Exp::RootTree()
 {
-	XuLy();
-	InFix2PostFix();
+
 	stack<Node*> st;
 	string op;
 	for (int i = 0; i < exp.length(); i++)
@@ -185,9 +142,32 @@ Node* Exp::RootTree()
 			}
 		}
 		else op += exp[i];
-		
+
 	}
 	return st.top();
+}
+
+double Exp::Calculate(Node* root)
+{
+	if (CheckNum(root->data[0])) return stod(root->data);
+	else
+	{
+		switch (root->data[0])
+		{
+		case '+':
+			return Calculate(root->left) + Calculate(root->right);
+
+		case '-':
+			return Calculate(root->left) - Calculate(root->right);
+
+		case '*':
+			return Calculate(root->left) * Calculate(root->right);
+
+		case '/':
+			return Calculate(root->left) / Calculate(root->right);
+
+		}
+	}
 }
 
 

@@ -18,13 +18,7 @@ struct Node
 class Exp
 {
 	string exp;
-	// convert infix to postfix
-	void InFix2PostFix();
-	// format expression
-	void XuLy();
-	// check number (double)
-	bool CheckNum(char);
-	int CheckPriority(char);
+	Node* root;
 	
 	
 public:
@@ -33,7 +27,17 @@ public:
 	void InPut();
 	// Initial a tree from expression
 	Node* RootTree();
+	// calculate the expression from tree's root
+	double Calculate(Node* root);
 
+private:
+	// convert infix to postfix
+	void InFix2PostFix();
+	// format expression
+	void XuLy();
+	// check number (double)
+	bool CheckNum(char);
+	int CheckPriority(char);
 	
 };
 

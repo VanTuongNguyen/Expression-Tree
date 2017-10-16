@@ -5,9 +5,12 @@ using namespace std;
 int main()
 {
 	Exp e;
+	double a;
 	e.InPut();
+
+	a=e.Calculate(e.RootTree());
+	cout << a;
 	
-	Node* p=e.RootTree();
 	
 	system("pause");
 }
